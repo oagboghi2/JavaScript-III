@@ -75,7 +75,7 @@ var user = new CharacterStats({
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
-Humanoid.prototype = Object.create(CharacterStats.prototype)
+
 //Test you work by uncommenting these 3 objects and the list of console logs below:
 
 
@@ -145,24 +145,65 @@ Humanoid.prototype = Object.create(CharacterStats.prototype)
   // * Create Villian and Hero classes that inherit from the Humanoid class.  
   // * Give the Hero and Villians different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villian and one a hero and fight it out with methods!
-Hero.prototype = Object.create(Humanoid.prototype)
-
+Humanoid.prototype = Object.create(CharacterStats.prototype)
 function Hero(attr){
-  Humanoid.call(this, attr);
+  Humanoid.call(this, attr),
+  this.special = attr.special
+  this.attack = function(){
+    
+    return `${this.name} has successfully attacked`;
+  },
+  this.defend = function(){
+    this.hp - 100;
+    if(`${this.hp}` <= 0){
+      return `${this.name} has died`
+    }else{
+      return `${this.name} was hit` 
+    }
+  }
 }
 
+
+
 const Hero1 = new Hero({
-  "hp": 200,
-  "faction": "Alliance",
-  "weapon": "sword"
-})
+  special: "Arrow Storm"
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  hp: 10,
+  name: 'Lilith',
+  faction: 'Forest Kingdom',
+  weapons: [
+    'Bow',
+    'Dagger',
+  ],
+  language: 'Elvish',
+});
 
 function Villain(attr) {
   Humanoid.call(this, attr);
 }
 
-var user = new Hero({
-  
+const Villain1 = new Hero({
+  special: "Shadow Lighting"
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 1,
+    height: 1,
+  },
+  hp: 5,
+  name: 'Skeletor',
+  faction: 'Leaden Key',
+  weapons: [
+    'Staff of Thaos',
+  ],
+  language: 'Common Toungue',
 });
-console.log(Hero1.hp, Hero1.faction, Hero1.weapon); 
-console.log(Villian);
+
+console.log(Hero1);
+console.log(Hero1.defend());
+console.log(Villain1);
