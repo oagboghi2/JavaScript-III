@@ -32,25 +32,27 @@ function GameObject(attr){
   * should inherit destroy() from GameObject's prototype
 */
 
+CharacterStats.prototype = Object.create(GameObject.prototype)
 
 function CharacterStats(attr){
   GameObject.call(this, attr);
   this.hp = attr.hp;
   this.name = attr.name;
-  this.takeDamage = function(){
-    return `${this.name} took damage.`
   };
 
+
+CharacterStats.prototype.takeDamage = function () {
+  return `${this.name} took damage.`
 }
 
-CharacterStats.prototype = Object.create(GameObject.prototype)
 var user = new CharacterStats({
   "hp": 100,
   "name":"Master Chief",
 
 
 })
-//console.log(user.destroy());
+console.log(user.destroy());
+console.log(user.takeDamage());
 
 /*
   === Humanoid ===
@@ -61,6 +63,8 @@ var user = new CharacterStats({
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
+Humanoid.prototype = Object.create(CharacterStats.prototype)
+
  function Humanoid(attr){
    CharacterStats.call(this, attr),
    this.faction = attr.faction,
@@ -145,7 +149,6 @@ var user = new CharacterStats({
   // * Create Villian and Hero classes that inherit from the Humanoid class.  
   // * Give the Hero and Villians different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villian and one a hero and fight it out with methods!
-Humanoid.prototype = Object.create(CharacterStats.prototype)
 function Hero(attr){
   Humanoid.call(this, attr),
   this.special = attr.special
@@ -166,7 +169,7 @@ function Hero(attr){
 
 
 const Hero1 = new Hero({
-  special: "Arrow Storm"
+  special: "Arrow Storm",
   createdAt: new Date(),
   dimensions: {
     length: 1,
@@ -188,7 +191,7 @@ function Villain(attr) {
 }
 
 const Villain1 = new Hero({
-  special: "Shadow Lighting"
+  special: "Shadow Lighting",
   createdAt: new Date(),
   dimensions: {
     length: 2,
